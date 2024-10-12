@@ -1,0 +1,964 @@
+import time
+'''
+This game is called "Journey to Unknown."
+After being launched into space, users are given the choice to return back to Earth, go to Mars, or head to an unknown planet.
+In the three storylines, they user will try to stay alive and continue the story. 
+'''
+
+#preagme
+username = input("What do you want your astronaut name to be?\n> ") #asks the user what they want to be called and they can choose whatever name they want
+
+def pregame():
+    print("Welcome, " + username + "!") #the username that they inputted is printed here and they are welcomed
+    time.sleep(2) #time.sleep() stops the exucution of the next command for the given amount of time
+    welcome_message() #calls a the named function 
+    ready_or_not()
+    time.sleep(2)
+    for i in range(15): #this is a for loop that will repeat everything (indetnted) under it for x amount of times, if x was range(x)
+        time.sleep(1.2)
+        print(".", end=" ") #"end=" is a paramater for the print function that says that the next output will be on the same line. By default, the print function ends with a newline
+    start_room()
+
+def welcome_message():
+    print("Your mission is about to begin. The vast unknown of space awaits, filled with dangers and discoveries beyond your imagination.")
+    time.sleep(3.5)
+    print("Will you survive the journey, overcome the challenges, and uncover the mysteries of the cosmos?")
+    time.sleep(3.5)
+    print("There's no turning back now! Brace yourself for launch, because your adventure begins the moment you break through the atmosphere!")
+    time.sleep(3.5)
+
+def ready_or_not():
+    is_ready = input("Are you ready?\n> ") #Using the backslash to create an escape character, the character 'n' will create a new line
+
+    if is_ready == "Yes": #if the condition of is_ready is met, then the code written underneath it will be exucuted
+        time.sleep(1)
+        launch_countdown()
+    elif is_ready == "No": #elif means that if this is_ready condition is met, then the code underneath it will be exucuted. If all statements were if statements, any conditions of is_ready that are met will be ran.
+        print("You have exited the game.")
+        quit()
+    else: #If no conditions are met, else is ran and only the code underneath it will be ran
+        print("**INVALID INPUT**\n**Please enter 'Yes' or 'No' (capitalized)**")
+        ready_or_not()
+
+def launch_countdown():
+    ti = 9 #here the ti varaible is named
+    print("T-10...", end=" ")
+    time.sleep(0.5)
+    print("CORE ENGINE START")
+    time.sleep(0.3)
+    for ti in range(9, 0, -1): #a for loop is using but in the range there are multiple numbers. The vaiable (ti) will start at 9 and repeat until 0 (does not include 0) and it will count by -1, or in other words, it will count down by 1. 
+        time.sleep(1)
+        print("T-" + str(ti) + "...")
+    time.sleep(1)
+    print("T-0...")
+    time.sleep(0.5)
+    print("BLAST OFF!!!!!")
+#end of pregame
+
+#misc
+def play_again(): #this function is for when the game is finished
+    print("If you would like to restart the game, enter 'Restart', otherwise enter 'Quit'")
+    play = input("> ")
+    if play == "Restart":
+        pregame()
+    elif play == "Quit":
+        quit()
+    else:
+        print("\n**Please only enter 'Restart' or 'Quit'**")
+        play_again()
+
+def end_thank(): #this functions is a thank you when the game ends, then it will ask the user it they want to play again
+    time.sleep(5)
+    print("I hoped you enjoyed my game :)")
+    time.sleep(3)
+    play_again()
+
+def quit_or_not(): #this function asks the user if they want to quit or not in the middle of the game
+    print("If you would like to exit the game, say 'Yes'.\nOtherwise say 'No'")
+    quit_ = input("> ")
+
+    if quit_ == "Yes":
+        print("Exiting the game.")
+        quit()
+    elif quit_ == "No":
+        print("Continuing game...")
+        time.sleep(1)
+    else:
+        print("\n**INVALID INPUT**\n**Please enter 'Yes' or 'No' (capitalized)**")
+        quit_or_not()
+#end of misc
+
+
+#start_room
+start_message = ( #this variable is named to have text in it
+    "\n\nYou've made it to orbit. The roar of launch is gone, replaced by the quiet of space. Earth glows below, stars stretch endlessly above." 
+    "\nBut don't get too comfortable—your mission has just begun. Take a deep breath and prepare for what lies ahead."
+)
+
+def start_room():
+    print(start_message) #the variable is printed
+    time.sleep(4)
+    question1() #the first question is asked
+
+def question1(): 
+    print("\nDo you want to turn back to Earth (1), continue with the intended mission to MARS (2), or ignore commands and go to an unknown planet far, far away (3).")
+    choice1 = input("> ")
+
+    if choice1 == "1":
+        return_earth() #this will run another function that leads to other functions being ran and the game is ran as such
+    elif choice1 == "2":
+        mission_mars()
+    elif choice1 == "3":
+        planet()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**") #if the user does not enter '1', '2', or '3', it will ask the user if it wants to exit the game and if not, it will rerun the quesiton
+        quit_or_not()
+        question1()
+#end of start_room
+
+#return_earth_
+def return_earth(): #the function return_earth is the first choice the user has for the first question asked, the rest of the storyline will be played and users cannot go to other storylines
+    print("You have contacted mission control center and informed them of your decision.")
+    time.sleep(2)
+    print("You are turning back now")
+    time.sleep(1.5)
+    for i in range(5): #this for loop will print with a 1 second delay 5 times
+        print("...")
+        time.sleep(1)
+    print("BOOMMMMMMMMMM!!!")
+    time.sleep(2)
+    print("Your spacecraft just hit a meteor and it is now critically failing.")
+    time.sleep(1.5)
+    re_question1()
+
+def re_question1():
+    print("\nAre you going to attempt to fix failures (1) or jump out of the spacecraft (2).")
+    re_choice1 = input("> ")
+    
+    if re_choice1 == "1":
+        jumped_ending() #as the user decides what it wants to do, some will lead to endings 
+    elif re_choice1 == "2":
+        stay_ending()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        re_question1()
+
+def jumped_ending(): #the very first ending
+    print("You may have you astronaut suit on but your helmet was cracked during the impact.")
+    time.sleep(2)
+    print("You end up sufficating to death immediately. Quick and painless")
+    end_thank() #this function, as mentioned, will thank the user for playing and ask if they want to play again
+
+def stay_ending():
+    print("You try your best to say the spacecraft but your efforts are no use. The damage is too much.")
+    time.sleep(2)
+    print("You and your crew explode with the spacecraft. All of you lived a great life.")
+    end_thank()
+#end of return_earth_path
+
+#mission_mars
+def mission_mars(): #the function mission_mars() is the second choice the user has for the first question asked in the game, the rest of the storyline will be played and users cannot go back to the others
+    print("You continue onto MARS. (You're such a boring person)")
+    time.sleep(1.5)
+    for i in range(5): #identical for loop as before
+        print("...")
+        time.sleep(1.2)
+    time.sleep(1)
+    print("\nENTERING MARS' ATMOSPHERE")
+    time.sleep(2.6)
+    print("BING")
+    time.sleep(0.6)
+    print("BANG")
+    time.sleep(0.6)
+    print("BONG")
+    time.sleep(0.6)
+    print("BANG")
+    time.sleep(0.6)
+    print("BOOM")
+    time.sleep(0.6)
+    print("BING")
+    time.sleep(0.6)
+    print("BANGGGGGGGGG!!!")
+    time.sleep(5)
+    print("You have landed on MARS. The entry was rough but your crew came out with little scuffs.")
+    time.sleep(2)
+    print("Your spacecraft, however, has taken much damage and you lost communication to EARTH.")
+    time.sleep(4)
+    print("You feel a strong breeze and look over to the ---. A GIANT DUST STORM IS COMING!!")
+    time.sleep(4)
+    mm_question1() #first quesiton for mission_mars is asked
+
+def mm_question1():
+    print("\nAre you going to deploy an *untested* HABITAT SYSTEM (1), go back into your broken spaceship (2), or head for a nearby cave (3).")
+    mm_choice1 = input("> ")
+
+    if mm_choice1 == "1":
+        habitat()
+    elif mm_choice1 == "2":
+        broke_craft_ending()
+    elif mm_choice1 == "3":
+        cave()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        mm_question1()
+
+def broke_craft_ending():
+    time.sleep(1)
+    print("You run back into the spaceship. (probably the stupidest decision of your life)")
+    time.sleep(3)
+    print("As the storm nears, you are pelleted with grains of sands and suddenly, you hear a crack.")
+    time.sleep(4)
+    print("AN OPEN WIRE STARTS A FIRE AND THE WHOLE SPACECRAFT EXPLODESSSSSSSSSSSSSS AND")
+    time.sleep(3)
+    print("you die")
+    end_thank()
+
+def habitat():
+    print("*HABITAT SYSTEM DEPLOYED*")
+    time.sleep(4)
+    print("You are safe from the storm but it is still passing. You are really bored.")
+    time.sleep(3)
+    hab_question1()
+
+def hab_question1():
+    print("\nWould you like to search the spaceship for food (1), take a nap (2), or play charades with your crew (3)?")
+    hab_choice1 = input("> ")
+
+    if hab_choice1 == "1":
+        search_food()
+    elif hab_choice1 == "2":
+        nap()
+    elif hab_choice1 == "3":
+        time.sleep(1)
+        charades_question1()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        hab_question1()
+
+def search_food():
+    print("You enter your nearly destroyed spaceship and scavange it to find food.")
+    time.sleep(3)
+    print("You come across a box labeled 'FOOD' but you need to enter a passcode to open it.")
+    time.sleep(2)
+    print("\nWith your messed up memory from the landing, you think the code might either be '1432' (1), '7859' (2), or '0942' (3)")
+    time.sleep(3)
+    foodcode_question()
+
+def foodcode_question():
+    print("Which passcode will you try?")
+    foodcode_choice1 = input("> ")
+
+    if foodcode_choice1 == "1":
+        foodcode_ending()
+    elif foodcode_choice1 == "2":
+        foodcode_ending()
+    elif foodcode_choice1 == "3":
+        foodcode_food()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        foodcode_question()
+
+def foodcode_ending(): #earliest ending for mission_mars
+    print("The box says *ERROR* and plays a beep noise.")
+    time.sleep(2)
+    print("Suddenly you feel the whole spacecraft move.")
+    time.sleep(2)
+    print("BOOOOOOM!!!")
+    time.sleep(2)
+    print("The spacecraft exploded because you entered the wrong code. You killed your whole crew.")
+    end_thank()
+
+def foodcode_food():
+    print("The box says *UNLOCKED*")
+    time.sleep(2)
+    print("You open it up and there is FRIED CHICKED in it.")
+    time.sleep(2)
+    print("You gobble it all up.")
+    time.sleep(4)
+    print("You go back outside and you realize that the storm has passed.")
+    time.sleep(1.5)
+    print("What will you do now?")
+    time.sleep(1.5)
+    print("The crew says that you should be exploring the planet.")
+    time.sleep(3)
+    storm_passed_question()
+
+def nap():
+    print("You fall into a deep sleep. Luckily nothing happened to you while you were dreaming.")
+    time.sleep(2)
+    print("The storm has passsed now.")
+    time.sleep(1.5)
+    print("What will you do now?")
+    time.sleep(1.5)
+    print("The crew says that you should be exploring the planet.")
+    time.sleep(3)
+    storm_passed_question()
+
+def charades_question1():
+    print("\nDo you want to act first (1) or guess first (2).")
+    charades_choice1 = input("> ")
+
+    if charades_choice1 == "1":
+        charades_ending1()
+    elif charades_choice1 == "2":
+        charades_2()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        charades_question1()
+
+def charades_2():
+    print("Your teammate looks like he is throwing something over his back with two hands, and then doing something with his hands.")
+    time.sleep(3)
+    charades_question2()
+
+def charades_question2():
+    print("\nWhat is your guess? He's using an axe (1), throwing a ball (2), or fishing (3)")
+    charades_choice2 = input("> ")
+    
+    if charades_choice2 == "1":
+        charades_ending2()
+    elif charades_choice2 == "2":
+        charades_ending2()
+    elif charades_choice2 == "3":
+        charades_3()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        charades_question2()
+
+def charades_ending1():
+    print("You did so bad. Nobody could guess what you are doing.")
+    time.sleep(2)
+    print("Your crewmates throw you into the storm and you die.")
+    end_thank()
+
+def charades_ending2():
+    print("YOU ARE WRONG.")
+    time.sleep(2)
+    print("Your crewmates throw you into the storm and you die.")
+    end_thank()
+
+def charades_3():
+    print("Good job. You got it right.")
+    time.sleep(2)
+    print("You continuing playing with your crew until the storm has passed.")
+    time.sleep(3)
+    print("What will you do now?")
+    time.sleep(1.5)
+    print("The crew says that you should be exploring the planet.")
+    time.sleep(2)
+    storm_passed_question()
+
+def storm_passed_question():
+    time.sleep(3)
+    print("\nDo you want to explore the NORTH (1), WEST (2), EAST (3), or SOUTH (4).")
+    explore_choice1 = input("> ")
+
+    if explore_choice1 == "1": #all inputs will continue the same storyline
+        explore()
+    elif explore_choice1 == "2":
+        explore()
+    elif explore_choice1 == "3":
+        explore()
+    elif explore_choice1 == "4":
+        explore()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        storm_passed_question()
+
+def explore():
+    print("You walk for days on end and you cannot find anything.")
+    time.sleep(2)
+    explore_question()
+
+def explore_question():
+    print("Do you want to continue (1) or turn back around (2)?")
+    explore_choice1 = input("> ")
+    
+    if explore_choice1 == "1":
+        explore_mountain()
+    elif explore_choice1 == "2":
+        explore_ending()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        explore_question()
+
+def explore_ending():
+    print("Your crew turn back around but they can't find the spacecraft either.")
+    time.sleep(2)
+    print("You and your crew starve to death in the middle of nowhere on MARS.")
+    end_thank()
+
+def explore_mountain():
+    print("You decided to continue.")
+    time.sleep(1.2)
+    print("Which is good because you see a mountain in the far distance.")
+    time.sleep(1.6)
+    print("You and your crew decide to head for it since it is the first thing they have seen in days.")
+    time.sleep(2)
+    for i in range(6): #a for loop that will repeat 6 times
+        time.sleep(1.2)
+        print(".", end=" ") #by using 'end=' here, the dots will seem like a loading sequence
+    time.sleep(1.2)
+    print("\nAs you guys approach the moutain, it just keeps getting", end=" ")
+    time.sleep(1.5)
+    print("bigger", end="")
+    time.sleep(2.4)
+    print(", BIGGER", end="") #'end=' is used here to create more exitment as the mountain does indeed get bigger, hopefully getting a mental image across for the user
+    time.sleep(3)
+    print(", AND BIGGERRRRR.")
+    time.sleep(2)
+    print("You see a hole in the cave. It appears to be a cave")
+    time.sleep(2)
+    explore_cave_question()
+
+def explore_cave_question():
+    print("\nWould you like to enter it (1) or go to a different part of the mountain (2)?")
+    explore_cave_choice1 = input("> ")
+
+    if explore_cave_choice1 == "1":
+        enter_cave()
+    elif explore_cave_choice1 == "2":
+        mountain_ending()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        explore_cave_question()
+
+def mountain_ending():
+    print("You and your crew end up walking around the mountain to find something interesting.")
+    time.sleep(3)
+    print("But you come across nothing. No where you could climb, or any other caverns.")
+    time.sleep(3)
+    print("Out of nowhere an extraterrestrial animal comes running towards you.")
+    time.sleep(3)
+    print("You guys try to out run it but it is no use.")
+    time.sleep(3)
+    print("You and your crew become dinner.")
+    end_thank()
+
+def enter_cave():
+    print("You can't see anything as you enter the cave it is ptich black and you can't see anything.")
+    time.sleep(3)
+    print("Then you see a light emerge, lighting up the cave.")
+    time.sleep(3)
+    print("What also emerges is a weird creature with three heads. Your crew steps back.")
+    time.sleep(2)
+    print("But it hands you some funny looking mushrooms.")
+    time.sleep(2)
+    mushroom_question()
+
+def mushroom_question():
+    print("\nAre you going to take the mushrooms (1) or run away (2)?")
+    mushroom_choice = input("> ")
+    
+    if mushroom_choice == "1":
+        mushroom_ending1()
+    elif mushroom_choice == "2":
+        mushroom_ending2()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        mushroom_question()
+
+def mushroom_ending1(): #the only non-death ending after choosing to deploy habitat in the first question of mission_mars
+    print("You ate the mushroom.")
+    time.sleep(3)
+    print("You woke up in your bed.")
+    time.sleep(2)
+    print("CONGRATS YOU ESCAPED YOUR DREAM")
+    end_thank()
+
+def mushroom_ending2():
+    print("You guys start running away. (scaredy cats)")
+    time.sleep(3)
+    print("You don't get very far before get absolutely mauled by the creature.")
+    end_thank()
+
+#cave is the third choice that the user can choose in the first quesiton of mission_mars
+def cave():
+    print("You and your crew rush into the cave to avoid the storm.")
+    time.sleep(2)
+    print("It's dark, cold, and the sound of the wind echoes through the cave.")
+    time.sleep(2)
+    print("As you move further inside, your flashlight flickers, revealing strange markings on the walls.")
+    time.sleep(3)
+    print("You hear a noise deeper in the cave. Something is moving.")
+    time.sleep(2)
+    cave_question1()
+
+def cave_question1():
+    print("\nWill you keep moving deeper into the cave (1), stop and examine the markings (2), or turn back (3)?")
+    cave_choice1 = input("> ")
+
+    if cave_choice1 == "1":
+        deeper_cave()
+    elif cave_choice1 == "2":
+        examine_markings()
+    elif cave_choice1 == "3":
+        cave_ending1()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        cave_question1()
+
+def cave_ending1(): #first ending of the cave storyline
+    print("You turn back, deciding it's too risky to continue deeper into the cave.")
+    time.sleep(2)
+    print("Unfortunately, the storm outside is too strong, and you can't escape the cave in time.")
+    time.sleep(2)
+    print("The cave collapses, trapping you and your crew. You all perish in the rubble.")
+    end_thank()
+
+def examine_markings():
+    print("You stop to examine the strange markings on the cave walls.")
+    time.sleep(2)
+    print("They appear to be ancient symbols, but their meaning is unclear.")
+    time.sleep(2)
+    print("As you try to decipher them, the floor beneath you collapses!")
+    time.sleep(2)
+    print("You and your crew fall into a massive hole, and the last thing you hear is the wind howling as you plummet to your doom.")
+    end_thank()
+
+def deeper_cave():
+    print("You and your crew venture deeper into the cave, unsure of what lies ahead.")
+    time.sleep(3)
+    print("Suddenly, you hear a growl. A large, weird creature with glowing eyes appears in front of you!")
+    time.sleep(3)
+    print("It's blocking your path, and you must decide how to defend yourselves.")
+    time.sleep(2)
+    print("You find three weapons lying on the cave floor!")
+    time.sleep(2)
+    weapon_question()
+
+def weapon_question():
+    print("\nWhich weapon will you choose to defend yourself: a laser gun (1), an ancient sword (2), and a glowing staff (3)?")
+    weapon_choice = input("> ")
+
+    if weapon_choice == "1":
+        laser_gun_ending()
+    elif weapon_choice == "2":
+        sword_ending()
+    elif weapon_choice == "3":
+        glowing_staff()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        weapon_question()
+
+def laser_gun_ending():
+    print("You grab the laser gun and fire it at the creature.")
+    time.sleep(2)
+    print("But the creature absorbs the energy from the laser and grows even larger.")
+    time.sleep(2)
+    print("The creature charges at you, and before you can react, it devours you and your crew.")
+    end_thank()
+
+def sword_ending():
+    print("You swing the ancient sword at the creature, but it simply bounces off its tough skin.")
+    time.sleep(2)
+    print("The creature lets out a roar and lunges forward, crushing you and your crew.")
+    end_thank()
+
+def glowing_staff(): #the only weapon that will defeat the creature
+    print("You grab the glowing staff, and as you lift it, it hums with energy.")
+    time.sleep(2)
+    print("The creature hesitates, sensing the power of the staff. You strike it with the staff, and the creature disintegrates into dust.")
+    time.sleep(3)
+    print("Your path forward is now clear.")
+    time.sleep(2)
+    cave_portal()
+
+def cave_portal(): 
+    print("You continue deeper into the cave until you find a strange portal glowing at the end.")
+    time.sleep(2)
+    portal_question()
+
+def portal_question():
+    print("\nWill you enter the portal (1) or explore the cave further (2)?")
+    portal_choice = input("> ")
+
+    if portal_choice == "1":
+        portal_ending()
+    elif portal_choice == "2":
+        cave_ending2()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        portal_question()
+
+def portal_ending(): #the only non-death ending in the cave storyline after choosing it in the first question of mission_mars
+    print("You step into the portal and feel yourself being pulled through space and time.")
+    time.sleep(2)
+    print("Suddenly, you wake up in a familiar place... It's Earth! You've made it back home!")
+    time.sleep(2)
+    print("CONGRATS YOU ESCAPED MARS")
+    end_thank()
+
+def cave_ending2():
+    print("You decide to explore the cave further instead of entering the portal.")
+    time.sleep(2)
+    print("But the cave goes on forever, and you lose your way. Days pass, and you and your crew can't find an exit.")
+    time.sleep(2)
+    print("You all eventually starve to death, lost deep within the cave.")
+    end_thank()
+#end of mission_mars
+
+
+#planet
+def planet(): #the third choice of the very first question
+    print("You continue and go past MARS. (You're such a naughty person)")
+    time.sleep(1.5)
+    for i in range(10): #the for loop will repeat 10 times and a similar loading sequence will show
+        time.sleep(1.2)
+        print(".", end=" ")
+    time.sleep(1)
+    print("\n\nYou see an undiscovered planet in the far distance.")
+    time.sleep(3)
+    planet_question1()
+
+def planet_question1():
+    print("\nDo you want to go to this planet (1) or go past it and find an even further one (2)?")
+    choice = input("> ")
+
+    if choice == "1":
+        planet_ending()
+    elif choice == "2":
+        far_planet()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        planet_question1()
+
+def planet_ending():
+    time.sleep(1.5)
+    for i in range(5): #the same for loop used as previous (not the loading sequences one but this has been used before) to show the spacecraft landing on a planet
+        print("...")
+        time.sleep(1.2)
+    time.sleep(1)
+    print("\nENTERING UNKNOWN PLANET")
+    time.sleep(2)
+    print("poof")
+    time.sleep(2)
+    print("You and your spacecraft completely disintegrated as you entered the PLaNet")
+    end_thank()
+
+def far_planet():
+    time.sleep(1.5)
+    for i in range(5): #for loop used again
+        print("...")
+        time.sleep(1.2)
+    time.sleep(1)
+    print("\nENTERING UNKNOWN PLANET")
+    time.sleep(2.6)
+    print("BING")
+    time.sleep(0.6)
+    print("BANG")
+    time.sleep(0.6)
+    print("BONG")
+    time.sleep(0.6)
+    print("BANG")
+    time.sleep(0.6)
+    print("BOOM")
+    time.sleep(0.6)
+    print("BING")
+    time.sleep(0.6)
+    print("BANGGGGGGGGG!!!")
+    time.sleep(5)
+    print("You have landed on tHe uNknOwN plAneT.", end="")
+    for i in range(8): #another loading sequence 
+        time.sleep(1.2)
+        print(".", end=" ")
+    time.sleep(3)
+    print("You wake up after feeling like you fell into an 1,000-year sleep.")
+    time.sleep(3)
+    print("Where are you?")
+    for i in range(5): 
+        time.sleep(1.2)
+        print(".", end="")
+    time.sleep(2)
+    print("\nYou look around. You're in this futuristic looking hospital.")
+    time.sleep(3)
+    planet_question2()
+
+def planet_question2(): #first question after entering the unknown planet that doesn't get the user killed
+    print("\nAre you going to escape this hospital (1) or stay (2)?")
+    hospital_choice = input("> ")
+
+    if hospital_choice == "1":
+        escape_()
+    elif hospital_choice == "2":
+        stay_()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        planet_question2()
+
+def escape_():
+    print("You decide to escape the hospital. The hallways are long and eerily quiet.")
+    time.sleep(2)
+    escape_question()
+
+def escape_question():
+    print("\nDo you want to sneak through the ventilation system (1) or rush to the exit (2)")
+    escape_choice = input("> ")
+
+    if escape_choice == "1":
+        ventilation_death()
+    elif escape_choice == "2":
+        rush_exit()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        escape_question()
+
+def ventilation_death(): #first ending in this unknown planet
+    print("You crawl into the ventilation system. It's dark and cramped.")
+    time.sleep(2)
+    print("As you crawl further, the vent breaks!")
+    time.sleep(1.5)
+    print("You fall into a deep pit and die.")
+    end_thank()
+
+def rush_exit():
+    print("You rush toward the exit, your heart pounding.")
+    time.sleep(2)
+    print("Suddenly, alarms start blaring!")
+    time.sleep(2)
+    print("But you manage to dash out of the hospital and find yourself in a futuristic city with flying cars everywhere.")
+    time.sleep(3)
+    city()
+
+def city():
+    print("You're now free in this futuristic city, but you have nothing.")
+    time.sleep(3)
+    print("What will you do next?")
+    time.sleep(2)
+    city_question()
+
+def city_question():
+    print("\nSteal food (1), pickpocket someone (2), or steal a car (3)?")
+    city_action = input("> ")
+
+    if city_action == "1":
+        steal_food()
+    elif city_action == "2":
+        pickpocket_question()
+    elif city_action == "3":
+        steal_car()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        city_question()
+
+def steal_food():
+    print("You find a food stall and swipe some strange-looking food.")
+    time.sleep(2)
+    print("However, the food smells weird.")
+    time.sleep(2)
+    
+def steal_food_question():
+    print("\nWill you eat it (1) or find another way to survive (2)?")
+    food_choice = input("> ")
+
+    if food_choice == "1":
+        steal_food_ending()
+    elif food_choice == "2":
+        homeless_shelter()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        steal_food_question()
+
+def steal_food_ending():
+    print("The food was poisonous!")
+    time.sleep(2)
+    print("You died on the streets.")
+    end_thank()
+
+def homeless_shelter():
+    print("You instead go to a homeless shelter for free food.")
+    time.sleep(2)
+    print("A wealthy person takes interest in you and offers to take you into their family.")
+    time.sleep(3)
+    
+def shelter_question():
+    print("\nWill you join their family (1) or run away (2)?")
+    shelter_choice = input("> ")
+
+    if shelter_choice == "1":
+        shelter_ending1()
+    elif shelter_choice == "2":
+        shelter_ending2()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        shelter_question()
+
+def shelter_ending1(): #first non-death ending after escaping the hospital
+    print("You join the family and live a life of luxury on this uNknOwN plAneT.")
+    end_thank()
+
+def shelter_ending2():
+    print("You run away but the police catch you for stealing earlier.")
+    time.sleep(2)
+    print("You are arrested but you died in jail.")
+    end_thank()
+    
+def pickpocket_question():
+    print("\nYou spot three potential targets: a rich person (1), a middle-class citizen (2), or a baby (3).")
+    pick_choice = input("> ")
+
+    if pick_choice == "1":
+        pickpocket_ending1()
+    elif pick_choice == "2":
+        pickpocket_success()
+    elif pick_choice == "3":
+        pickpocket_ending2()
+    else:
+        print("\n**Please only enter '1', '2', or '3'**")
+        quit_or_not()
+        pickpocket_question()
+
+def pickpocket_ending1():
+    print("You are not so sneaky.")
+    time.sleep(2)
+    print("You get caught be the police and die in jail.")
+    end_thank()
+
+def pickpocket_ending2():
+    print("THE BABY SUDDENLY TURNS INTO A ROBOT")
+    time.sleep(3)
+    print("It chops your head off.")
+    end_thank()
+
+def pickpocket_success():
+    print("You successfully pickpocket a middle-class citizen's wallet.")
+    time.sleep(2)
+    print("Inside, you find a card advertising free food at a location.")
+    time.sleep(2)
+    print("When you get there, the food looks suspicious.") 
+    time.sleep(2)
+    free_food_question()
+          
+def free_food_question():
+    print("\nWill you eat it (1) or leave it (2)?")
+    free_food_choice = input("> ")
+
+    if free_food_choice == "1":
+        free_food_ending1()
+        end_thank()
+    elif free_food_choice == "2":
+        free_food_ending2()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        free_food_question()
+
+def free_food_ending1():
+    print("You get really sick and pass out.")
+    time.sleep(2)
+    print("You wake up in your own bed.")
+    time.sleep(2)
+    print("CONGRATS YOU ESCAPED YOUR DREAM")
+    end_thank()
+
+def free_food_ending2():
+    print("The police track you down for pickpocketing and arrest you.")
+    time.sleep(2)
+    print("You end up dying in jail.")
+    end_thank()
+
+def steal_car():
+    print("You manage to steal a flying car and get inside.")
+    time.sleep(2)
+    
+def steal_car_question():
+    print("\nWill you try to fly the car out of the city (1), or ditch it and run (2)?")
+    car_choice = input("> ")
+
+    if car_choice == "1":
+        fly_car()
+    elif car_choice == "2":
+        ditch_car()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        steal_car_question()
+
+def fly_car():
+    print("You take control of the car and start flying.")
+    time.sleep(2)
+    print("You fly toward the edge of the city and notice a glowing barrier in the sky.")
+    time.sleep(2)
+    print("As you pass through the barrier,", end=" ")
+    time.sleep(2)
+    print("you are TELEPORTED BACK TO EARTH")
+    time.sleep(3)
+    print("CONGRATS YOU ESCAPED tHe uNknOwN plAneT") #similar ending to the portal ending in mission_mars where user goes into the portal that brings them back to earth
+    end_thank()
+
+def ditch_car():
+    print("You try to ditch the car.")
+    time.sleep(2) 
+    print("But lose control as it speeds up and crashes.")
+    time.sleep(2)
+    print("You don't survive the crash.")
+    end_thank()
+
+def stay_(): #second option after waking up in the unknown planet in a hospital
+    print("You decide to stay in the hospital.")
+    time.sleep(2)
+    print("A strange doctor approaches, offering you a place in his family.")
+    time.sleep(2)
+    
+def stay_question():
+    print("\nWill you join him (1) or try to escape (2)?")
+    stay_choice = input("> ")
+
+    if stay_choice == "1":
+        stay_ending()
+    elif stay_choice == "2":
+        escape_and_kill_doctor()
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        stay_()
+
+def stay_ending():
+    print("You join the doctor's family and live a rich and successful life on this uNknOwN plAneT.")
+    end_thank()
+
+def escape_and_kill_doctor():
+    print("You decide to escape, but also consider killing the doctor.")
+    time.sleep(2)
+    escape_or_kill()
+    
+def escape_or_kill():
+    print("\nWill you kill the doctor (1) or just escape (2)?")
+    kill_choice = input("> ")
+
+    if kill_choice == "1":
+        kill_doctor()
+    elif kill_choice == "2":
+        rush_exit() #brings the user to the first account of the futuristic city, will go through the storyline following it 
+    else:
+        print("\n**Please only enter '1' or '2'**")
+        quit_or_not()
+        escape_or_kill()
+
+def kill_doctor():
+    print("You kill the doctor.")
+    time.sleep(2) 
+    print("The hospital goes into emergency lockdown.")
+    time.sleep(2)
+    print("Robots swarm the room and eliminate you.")
+    end_thank()
+#end of planet
