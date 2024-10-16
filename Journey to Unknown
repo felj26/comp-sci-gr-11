@@ -185,7 +185,7 @@ def mission_mars(): #the function mission_mars() is the second choice the user h
     time.sleep(2)
     print("Your spacecraft, however, has taken much damage and you lost communication to EARTH.")
     time.sleep(4)
-    print("You feel a strong breeze and look over to the ---. A GIANT DUST STORM IS COMING!!")
+    print("You feel a strong breeze and look over to the North. A GIANT DUST STORM IS COMING!!")
     time.sleep(4)
     mm_question1() #first quesiton for mission_mars is asked
 
