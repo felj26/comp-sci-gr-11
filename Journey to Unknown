@@ -415,7 +415,7 @@ def explore_mountain():
     time.sleep(3)
     print(", AND BIGGERRRRR.")
     time.sleep(2)
-    print("You see a hole in the cave. It appears to be a cave")
+    print("You see a hole in the mountain. It appears to be a cave")
     time.sleep(2)
     explore_cave_question()
 
