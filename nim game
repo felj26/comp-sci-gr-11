@@ -1,0 +1,161 @@
+import random
+import time
+
+#function to prevent an error when player doesn't input a number
+def int_input(prompt):
+    while True:
+        input_value = input(prompt)
+        if input_value.isdigit():  #isdigit() check if the input is a number
+            return int(input_value)  #converts input to an integer
+        else: #if input is not a number
+            print("Please enter a valid number.") #tells player they should input a number
+
+#function to create the piles with unique random values
+def create_piles():
+    piles = random.sample(range(1, 9), 5)  #range(1,9) will use numbers from 1 to (but not including) 9. The 5 is the number of values that will be randomly selected in the range. A list will be outputted without any repitions of numbers
+    piles.sort(reverse=True) #sort() lists values in ascedning order by default, reverse=True will make it sort values in descrending order
+    return piles
+
+#function to display the current state of the piles
+def display_piles(piles):
+    print("\nCurrent piles:")
+    for i, pile in enumerate(piles, start=1):
+        if pile == 0: #checks if a pile is empty
+            print(f"Pile {i}: --") #prints an empty pile with "--"
+        else: #if a pile is not empty
+            print(f"Pile {i}: {'⭐  ' * pile}") #prints a pile with the amount of stars in a row
+        
+
+#function to take a player's turn
+def take_turn(player, piles):
+    while True:
+        pile_choice = int_input(f"{player}, choose a pile (1-5): ") #asks the player what pile they want to choose
+        pile_choice -= 1 #-1 is because of zero-base indexing when indexing a value in a list
+
+        if pile_choice < 0 or 4 < pile_choice: #checks if the user choose a valid pile
+            print(f"Invalid pile number! Please choose between 1 and 5.") #tells the player they choose an invalid pile
+            continue
+
+        if piles[pile_choice] == 0: #checks if the pile that the player chose has stars in it or not
+            print(f"Pile {pile_choice + 1} is empty! Please choose a non-empty pile.") #tells the user they have chosen a pile with no stars in it
+            continue
+            
+        max_remove = piles[pile_choice] #this variable sets the largest amount of stars the player can take from a pile
+        if max_remove == 1: #checks if a pile only has one star left
+            remove_choice = int(input(f"{player}, choose how many to remove (1): ")) #tells the player they can only remove 1 from this pile
+            if remove_choice < 1 or piles[pile_choice] < remove_choice: #checks if the user has chosen a valid amount of stars to remove
+                print(f"Invalid amount! You can only remove between 1 and {piles[pile_choice]} items.") #tells the player they have chosen an ivalid amount
+                continue
+        else: #if the pile does not only have one star left
+            remove_choice = int(input(f"{player}, choose how many to remove (1-{max_remove}): ")) #asks the player how many stars they want to remove from the pile
+            if remove_choice < 1 or piles[pile_choice] < remove_choice: #checks if the user has chosen a valid amount of stars to remove
+                print(f"Invalid amount! You can only remove between 1 and {piles[pile_choice]} items.") #tells the player they have chosen an ivalid amount
+                continue
+
+        piles[pile_choice] -= remove_choice #removes the amount of stars from the respective pile
+        break
+
+#function to let the bot take its turn
+def bot_turn(piles):
+    non_empty_piles = [i for i, pile in enumerate(piles) if pile > 0]
+
+    if len(non_empty_piles) == 1: #checks if there is only 1 value in the list non_empty_piles which indicates there is only one pile left with stars in it
+        pile_choice = non_empty_piles[0] #there should only be 1 value in the list to index and it should have the indexing value of the only pile left with stars
+        remove_choice = piles[pile_choice] - 1  #remove all but one so that the bot wins
+        print(f"Bot chooses pile {pile_choice + 1} and removes {remove_choice}") #tells the player which pile and how many stars were removed
+        piles[pile_choice] -= remove_choice #removes the amount of stars from the respective pile
+    else: #if there are still mutiple piles left to remove stars from
+        while True:
+            pile_choice = random.randint(0, 4) #a random pile will be chosen for the "bot" using randint() which will choose a random value from the range of 0 to 4 (not 1 to 5 because of zero-based indexing)
+            if piles[pile_choice] > 0: #checks if the pile chosen has stars in it to remove from, if not then randint() will be ran again since it is in a while loop
+                remove_choice = random.randint(1, piles[pile_choice]) #a random amount of stars will be removed from the pile chosen 
+                print(f"Bot chooses pile {pile_choice + 1} and removes {remove_choice}") #tells the player which pile and how many stars were removed
+                piles[pile_choice] -= remove_choice #removes the amount of stars from the respective pile
+                break
+
+#function to check if the game is over
+def check_game_over(piles):
+    return all(pile == 0 for pile in piles)
+
+#function to print the info about the game
+def welcome_message():
+    print("Welcome to the Nim Game!")
+    time.sleep(1.5)
+    print("In this game, you have 5 piles of stars. You can take any number of stars from any one pile.")
+    time.sleep(4)
+    print("The player forced to take the last star loses!")
+    time.sleep(3)
+    print("\nGame Modes:")
+    time.sleep(1.5)
+    print("1. **Two Players**: Two human players take turns removing stars from the piles.")
+    print("2. **Play against Bot**: You will take turns with a bot that removes stars randomly.")
+    time.sleep(6)
+    print("Choose your game mode to start!")
+    time.sleep(2.5)
+
+#main game loop
+def play_game():
+    #welcome_message()
+
+    while True:
+        mode = input("(1 = Two Players, 2 = Play against Bot)\n> ") #asks the player what game mode they want to play
+
+        if mode == "1": #two player mode
+            time.sleep(1)
+            player1 = input("Player 1 name: ") #asks the name of the first player
+            time.sleep(1)
+            player2 = input("Player 2 name: ") #asks the name of the second player
+            time.sleep(1.5)
+
+            piles = create_piles() #chooses the number of stars in each piles
+            display_piles(piles) #displays the piles
+            time.sleep(1.2)
+
+            current_player = player1
+            while True:
+                take_turn(current_player, piles) #player's turn, player 1 goes first
+                time.sleep(0.8)
+                display_piles(piles) #displays the piles
+                time.sleep(2.5)
+                if check_game_over(piles): 
+                    print(f"{current_player} loses! Game over.") #tells which player has loses
+                    break
+                current_player = player2 if current_player == player1 else player1 #current player will be changed to player 2 if it was player 1, if it was player 2, then it will change to player 1
+        
+        elif mode == "2": #bot mode
+            time.sleep(1)
+            player = input("Enter name: ") #asks the name of the player
+            time.sleep(0.6)
+            piles = create_piles() #chooses the number of stars in each piles
+            display_piles(piles) #displays the piles
+            time.sleep(1.2)
+
+            # Bot mode
+            while True:
+                take_turn(player, piles) #player goes first
+                time.sleep(0.8)
+                display_piles(piles) #piles are displayed
+                time.sleep(2.5) #piles are displayed
+                if check_game_over(piles):
+                    print("Player loses! Game over.") #tells the player they lost
+                    break
+
+                bot_turn(piles) #bot's turn
+                time.sleep(0.8)
+                display_piles(piles) #piles are displayed
+                time.sleep(2.5)
+                if check_game_over(piles):
+                    print("Bot loses! Game over.") #tells player that the bot has lost
+                    break
+
+        else:
+            print("Invalid choice. Please enter '1' for Two Players or '2' for Play against Bot.")
+            continue
+
+        play_again = input("Do you want to play again? (y/n): ").strip().lower()
+        if play_again != 'y':
+            print("Thanks for playing!")
+            break
+
+#run the game
+play_game()
