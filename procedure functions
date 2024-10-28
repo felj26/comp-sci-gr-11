@@ -1,0 +1,63 @@
+import time
+#joke
+def joke1():
+    print("How many computer programmers does it take to change a light bulb?")
+    time.sleep(2)
+    print("\nNone, that's a hardware problem.")
+
+def joke2():
+    print("I would tell you a UDP joke")
+    time.sleep(2)
+    print("\nBut you might not get it")
+
+def joke3():
+    print("What do you call 8 Hobbits?")
+    time.sleep(2)
+    print("A Hobbyte.")
+
+joke_choice = input("Which joke do you want to hear(1, 2, or 3)?: ")
+
+if joke_choice == "1":
+    joke1()
+elif joke_choice =="2":
+    joke2()
+elif joke_choice == "3":
+    joke3()
+else:
+    print("That was not a choice")
+
+
+#celsius to farenheit
+def celsius_to_farenheit(celsius):
+    farenheit=(celsius*9/5+32)
+    return farenheit
+
+#function to prevent an error when player doesn't input a number
+def int_input(prompt):
+    while True:
+        input_value = input(prompt)
+        if input_value.isdigit():  #isdigit() check if the input is a number
+            return int(input_value)  #converts input to an integer
+        else: #if input is not a number
+            print("Please enter a valid number.") #tells player they should input a number
+
+
+number = int_input("Temperature in C:")
+print("Is", celsius_to_farenheit(number), "in F") #outputs 50f
+
+
+#multiplication table
+number = int_input("Choose a number to make a multiplication from: ")
+def multiplication_table(number):
+    for i in range(1,11):
+        product = number*i
+        print(number, "x",i, "=", product)
+
+multiplication_table(number)
+
+
+#parameter passing
+'''
+Parameter passing is giving/updating a function with the variables that are called within the function.
+It can be used for formulas when doing math within python.
+'''
