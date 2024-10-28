@@ -43,7 +43,7 @@ def int_input(prompt):
 
 
 number = int_input("Temperature in C:")
-print("Is", celsius_to_farenheit(number), "in F") #outputs 50f
+print("It's", celsius_to_farenheit(number), "in F") #outputs 50f
 
 
 #multiplication table
