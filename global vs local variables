@@ -1,0 +1,11 @@
+global_var = "I am global!"
+
+def print_variables():
+    global global_var
+    print(global_var)
+
+    local_var = "I am local!"
+    print(local_var)
+
+print_variables()
+print(local_var) #output: NameError. since the variable is local in the function, it has not been defined outside of it 
