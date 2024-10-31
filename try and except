@@ -1,0 +1,38 @@
+try:
+    multiply = int(input("Input a number to multiply by 10: "))
+    print(multiply * 10)
+except:
+    print("Enter a valid number.")
+
+while True:
+    try:
+        num1 = int(input("Enter a number: "))
+        num2 = int(input("Enter a another number: "))
+        
+        while True:
+            operation = input("Choose an operation (+, -, *, or /): ")
+            if operation == "+":
+                print(num1 + num2)
+                break
+            elif operation == "-":
+                print(num1 - num2)
+                break
+            elif operation == "*":
+                print(num1*num2)
+                break
+            elif operation == "/":
+                print(num1/num2)
+                break
+            else:
+                print("Enter a valid operation")
+
+        break
+
+    except ZeroDivisionError:
+        print("Number cannot be divided by 0")
+    except:
+        print("Please choose a valid number")
+
+'''
+The finally block lets a code excute, ignoring the try and except blocks.
+'''
