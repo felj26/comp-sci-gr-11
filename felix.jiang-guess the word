@@ -1,0 +1,141 @@
+import random  # Imports the random module which is used to make random selections or generations
+import time  # Imports the time module from the python library so that python can use the time base of the system to use functions related to time
+from colorama import Fore, Style, init  # Imports colorama for colored text
+init(autoreset=True)  # Automatically resets colorama styles after each print
+
+def intro():  # A function that prints the rules of the game
+    print(Fore.YELLOW + Style.BRIGHT + """
+Welcome to the Word Guessing Game!
+
+Rules:
+- You'll choose a difficulty level to play.
+- A random word will be selected based on your choice.
+- The word will be hidden, and you'll see only underscores representing a letter.
+- You can guess either one letter or the entire word.
+- If your guess is correct, the letter will be revealed in the word.
+- If you guess the word, you will win!
+- If your guess is incorrect, you lose one attempt.
+- You have a total of 10 attempts to guess the word correctly.
+- Guess all the letters or the entire word before running out of attempts to win!
+
+Good luck!""")
+
+# Word lists for different difficulty levels
+word_list_easy = ["ant", "book", "duck", "fire", "gold"]  # 3-4 letter words
+word_list_medium = ["apple", "planet", "castle", "butter", "mirror"]  # 5-7 letter words
+word_list_hard = ["nightmare", "telescope", "chocolate", "watermelon", "characteristic"]  # 8+ letter words
+
+def choose_word():  # A function that lets the player choose how difficult the word will be
+    print(Fore.CYAN + Style.BRIGHT + "\nChoose a difficulty level:")
+    print(Fore.CYAN + "1. Easy (3-4 letter words)")
+    print(Fore.CYAN + "2. Medium (5-7 letter words)")
+    print(Fore.CYAN + "3. Hard (8+ letter words)")
+    
+    while True:
+        choice = input("\nEnter 1, 2, or 3: ").strip()
+        # Player will input 1, 2, or 3 for easy, medium, and hard words respectively
+        # Returns a random word from the respective list
+        if choice == "1":
+            return random.choice(word_list_easy)
+        elif choice == "2":
+            return random.choice(word_list_medium)
+        elif choice == "3":
+            return random.choice(word_list_hard)
+        else:
+            print(Fore.RED + "Invalid choice. Please try again.")  # Prompts for valid input if incorrect
+
+def get_guess():  # A function to get a valid guess from the player
+    while True:
+        guess = input("\nGuess: ").replace(" ", "").upper()
+        
+        if not guess.isalpha(): # Ensures the input only contains alphabetical characters
+            print(Fore.RED + "Your guess must only contain letters!")
+        else:
+            return guess  # Returns a valid guess
+
+def display_word(word, dashes, guess):  # Updates the display of the word
+    # Parameters:
+    # word: the secret word
+    # dashes: the current display of the word with underscores for unguessed letters
+    # guess: the letter guessed by the player
+
+    result = ""  # For storing the updated display of the word
+    for i in range(len(word)):
+        if word[i] == guess:  # Reveals the guessed letter in the word
+            result += guess
+        elif dashes[2 * i] != "_":  # Keeps already revealed letters unchanged
+            result += dashes[2 * i]
+        else:  # Adds underscores for unguessed letters
+            result += "_"
+        result += " "  # Maintains formatting with spaces
+    return result.strip()  # Removes spaces at the end
+
+def play_game():  # The main loop for the game
+
+    global dashes, attempts  # Makes these variables global for access across functions
+
+    guessed = []  # Stores the letters or words guessed by the player
+
+    # Loops until the word is guessed or attempts run out
+    while dashes.replace(" ", "") != word and attempts > 0:
+        print(Fore.YELLOW + Style.BRIGHT + "\nWord:" + Style.NORMAL + f"\n{dashes}")
+        print(Fore.MAGENTA + f"{attempts} incorrect guesses left.")
+        
+        guess = get_guess()  # Gets the player's guess using the function
+
+        # Checks if the player has already guessed this letter or word
+        if guess in guessed:
+            print(Fore.RED + f"You already guessed '{guess}'." 
+                + "\nThese are your guessed letters/words:", Fore.RED + Style.BRIGHT + f"{', '.join(guessed)}."
+                + Fore.YELLOW + Style.NORMAL + "\nTry a different one.")
+            continue
+
+        guessed.append(guess)  # Adds the guess to the list of guessed letters or words
+
+        if len(guess) == 1:  # If the player guessed a single letter
+            if guess in word:  # If the letter is in the word
+                print(Fore.GREEN + "That letter is in the word!")
+                dashes = display_word(word, dashes, guess)  # Updates the word display
+            else:  # If the letter is not in the word
+                print(Fore.RED + "That letter is not in the word.")
+                attempts -= 1  # Decreases attempts
+        else:  # If the player guessed a entire word
+            if guess == word:  # If the guess is correct
+                print(Fore.GREEN + "You guessed the word!")
+                dashes = word  # Sets the display to the word so that the 'win' message will be displayed at the end
+                break
+            else:  # If the guess is incorrect
+                print(Fore.RED + "That is not the word.")
+                attempts -= 1  # Decreases attempts
+
+    # Checks if the player won or lost and displays the appropriate message
+    if dashes.replace(" ", "") == word:
+        print(Fore.GREEN + f"Congrats! You win. The word was:", Fore.GREEN + Style.BRIGHT + word)
+    else:
+        print(Fore.RED + f"You lose. The word was:", Fore.RED + Style.BRIGHT + word)
+
+def play_again():  # Asks the player if they want to play again
+    while True:
+        choice = input(Fore.CYAN + "\nDo you want to play again? (yes/no): ").strip().lower()
+        if choice in ["yes", "y"]:
+            return True
+        elif choice in ["no", "n"]:
+            print(Fore.MAGENTA + Style.BRIGHT + "\nThanks for playing! Goodbye!\n")
+            return False
+        else:
+            print(Fore.RED + "Invalid choice. Please type 'yes' or 'no'.")
+
+# Main game loop
+intro()  # Displays the rules
+time.sleep(6)  # Adds a delay before starting
+
+while True:  # Runs the game until the player chooses to quit
+    word = choose_word().upper()  # Chooses the word
+    dashes = "_ " * len(word)  # Creates the initial display of the word
+    dashes = dashes.strip()  # Removes the trailing spaces
+    attempts = 10  # Sets the number of attempts
+
+    play_game()  # Runs the main game loop
+
+    if not play_again():  # Checks if the player wants to play again
+        break
